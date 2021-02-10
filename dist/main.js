@@ -5,9 +5,21 @@ const board = document.querySelector('.board');
 const restart = document.querySelector('.restart');
 restart.addEventListener('click', function () {
   location = location;
-})
+});
 
-// aggancio il popup col form
+// aggangio il pulsante info e il relativo popup
+const info = document.querySelector('.info');
+const infoPopup = document.querySelector('.infoPopup');
+
+// al clik su info mostro il relativo popup per 10 secondi
+info.addEventListener('click', function () {
+  infoPopup.classList.remove('hidden');
+  setTimeout( function () {
+    infoPopup.classList.add('hidden');
+  }, 10000);
+});
+
+// aggancio il popup iniziale per la scelta del livello
 const setPopup = document.querySelector('.setPopup');
 let setupForm = document.querySelector('.setupForm');
 
@@ -20,7 +32,6 @@ let girateNum = [];
 let girateOrd = [];
 let coppieTrovate = 0;
 let livello;
-
 
 // funzione che riordina casualmente gli elementi di un array
 const shuffle = arr => {
@@ -51,7 +62,7 @@ let flipCard = (e) => {
 
     // incremento e aggiorno il numero delle carte girate
     numeroClick++;
-    numClick.innerHTML = `flips: ${numeroClick}`;
+    numClick.innerHTML = `moves: ${Math.floor(numeroClick/2)}`;
 
     // nascondo il retro della carta cliccata e mostro il fronte
     let retro = e.target;
@@ -81,10 +92,10 @@ let confronta = () => {
       setTimeout( function () {
         winnerMsg();
       }, 1000);
-      // e dopo 5 secondi la pagina viene ricarticata per resettare il gioco
+      // e dopo 8 secondi la pagina viene ricarticata per resettare il gioco
       setTimeout( function () {
         location = location;
-        }, 5000);
+        }, 8000);
     }
   } else {
     // non contengono la stessa figura, quindi
@@ -102,11 +113,12 @@ let confronta = () => {
 
 // funzione che mostra il popup col punteggio a fine partita
 let winnerMsg = () => {
-  let punteggio = Math.round((120 + livello) * (livello ** 2 / (numeroClick * livello)));
+  let punteggio = Math.round(100 * 0.8 * livello / (numeroClick/2));
+  console.log(`livello: ${livello} , punteggio: ${punteggio}, mosse: ${numeroClick / 2}`);
   tempHtml = `
     <p>Hai fatto ${punteggio} punti!</p>
-    <p class="text-4xl py-4">(carte girate: ${numeroClick})</p>
-    <p>${numeroClick > 90 ? 'puoi fare di meglio...' : 'Ottimo risultato!'}</p>
+    <p class="text-2xl py-2">(${numeroClick/2} mosse)</p>
+    <p>${punteggio > 90 ? 'Ottimo risultato!' : 'Puoi fare di meglio'}</p>
     `;
   let winPopup = document.querySelector('.winPopup');
   winPopup.innerHTML = tempHtml;
