@@ -1,0 +1,29 @@
+# Dependency directories
+node_modules/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# dotenv environment variables file
+.env
+.env.test
+.env*.local
+
+package-lock.json
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
