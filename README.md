@@ -17,4 +17,5 @@ but keep in mind that you shouldn't compare scores obtained in different game le
 
 
 *credits*:
-Icons made by FreePik from [Flaticon](www.flaticon.com).
+Icons made by FreePik from [Flaticon](https://www.flaticon.com).
+-
