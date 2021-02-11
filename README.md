@@ -16,6 +16,6 @@ So, the score is simply calculated as:    100 * (0.8 * cards) / (your moves)
 but keep in mind that you shouldn't compare scores obtained in different game level. In fact with a few cards it's easy to get a score greater than 100, both because the above formula is valid with n → ∞ and because *perfect memorization* is much easier with a few cards.
 
 
-*credits*:
+*credits*
+
 Icons made by FreePik from [Flaticon](https://www.flaticon.com).
--
