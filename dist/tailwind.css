@@ -134,7 +134,7 @@ Forms
 2. Remove the margin in Firefox and Safari.
 */
 
-
+button,
 input,
 select {
   font-family: inherit; /* 1 */
@@ -148,7 +148,7 @@ Remove the inheritance of text transform in Edge and Firefox.
 1. Remove the inheritance of text transform in Firefox.
 */
 
-
+button,
 select { /* 1 */
   text-transform: none;
 }
@@ -157,8 +157,8 @@ select { /* 1 */
 Correct the inability to style clickable types in iOS and Safari.
 */
 
-
-[type='reset'],
+button,
+[type='button'],
 [type='submit'] {
   -webkit-appearance: button;
 }
@@ -227,10 +227,20 @@ p {
   margin: 0;
 }
 
+button {
+  background-color: transparent;
+  background-image: none;
+}
+
 /**
  * Work around a Firefox/IE bug where the transparent `button` background
  * results in a loss of the default `button` focus styles.
  */
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
 
 
 ul {
@@ -326,6 +336,10 @@ input::placeholder {
   color: #9ca3af;
 }
 
+button {
+  cursor: pointer;
+}
+
 h1 {
   font-size: inherit;
   font-weight: inherit;
@@ -349,7 +363,7 @@ a {
  * normalize.css.
  */
 
-
+button,
 input,
 select {
   padding: 0;
@@ -470,6 +484,10 @@ code {
   justify-content: space-between !important;
 }
 
+.justify-around {
+  justify-content: space-around !important;
+}
+
 .font-mono {
   font-family: "Ubuntu Mono" !important;
 }
@@ -482,9 +500,9 @@ code {
   height: 100vh !important;
 }
 
-.text-base {
-  font-size: 1rem !important;
-  line-height: 1.5rem !important;
+.text-xl {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
 }
 
 .text-2xl {
@@ -504,6 +522,11 @@ code {
 .my-8 {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
+}
+
+.my-12 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
 }
 
 .mx-auto {

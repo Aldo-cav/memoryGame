@@ -1,7 +1,7 @@
 // nodo dentro cui verranno create le carte
 const board = document.querySelector('.board');
 
-// imposto il reset della partita
+// imposto il restart della partita
 const restart = document.querySelector('.restart');
 restart.addEventListener('click', function () {
   location = location;
@@ -19,15 +19,21 @@ info.addEventListener('click', function () {
   }, 10000);
 });
 
+// chiudo il popup info col button OK
+const okInfo = document.querySelector('.okInfo');
+okInfo.addEventListener('click', function() {
+  infoPopup.classList.add('hidden');
+});
+
 // aggancio il popup iniziale per la scelta del livello
 const setPopup = document.querySelector('.setPopup');
 let setupForm = document.querySelector('.setupForm');
 
 // agancio il segnapunti
-let numClick = document.querySelector('.numClick');
+let scoreLabel = document.querySelector('.scoreLabel');
 
 // inizializzo le variabili
-let numeroClick = 0;
+let flippedCards = 0;
 let girateNum = [];
 let girateOrd = [];
 let coppieTrovate = 0;
@@ -54,15 +60,14 @@ const shuffle = arr => {
   return result;
 }
 
-
 // funzione che al click scopre la carta
 let flipCard = (e) => {
   // verifico che sia stato cliccato una card sul retro
   if (e.target.classList.contains('retro') && girateNum.length < 2) {
 
     // incremento e aggiorno il numero delle carte girate
-    numeroClick++;
-    numClick.innerHTML = `moves: ${Math.floor(numeroClick/2)}`;
+    flippedCards++;
+    scoreLabel.innerHTML = `moves: ${Math.floor(flippedCards/2)}`;
 
     // nascondo il retro della carta cliccata e mostro il fronte
     let retro = e.target;
@@ -83,10 +88,14 @@ let flipCard = (e) => {
 
 // funzione che confronta le due carte girate
 let confronta = () => {
+  // contengono la stessa figura ?
   if (girateNum[0] === girateNum[1]) {
-    // contengono la stessa figura
     coppieTrovate++;
-    // verifico se sono state trovate tutte le coppie
+    // svuoto gli array con le ultime due carte scoperte
+    girateNum.length = 0;
+    girateOrd.length = 0;
+
+    // sono state trovate tutte le coppie ?
     if (coppieTrovate === (livello/2)) {
       // mostro il messaggio di fine partita
       setTimeout( function () {
@@ -98,33 +107,28 @@ let confronta = () => {
         }, 8000);
     }
   } else {
-    // non contengono la stessa figura, quindi
-    // dopo un secondo le due carte vengono rigirate
+    // non contengono la stessa figura, dopo un secondo le due carte vengono ricoperte
     setTimeout( function() {
-      unflipCard(); 
-    }, 1000);
+      unflipCard();
+      girateNum.length = 0;
+      girateOrd.length = 0;
+     }, 1000);
   };
-  setTimeout( () => {
-    girateNum.length = 0;
-    girateOrd.length = 0;
-    // console.log('azzerati i due array');
-  }, 1050);  
 };
 
 // funzione che mostra il popup col punteggio a fine partita
 let winnerMsg = () => {
-  let punteggio = Math.round(100 * 0.8 * livello / (numeroClick/2));
-  console.log(`livello: ${livello} , punteggio: ${punteggio}, mosse: ${numeroClick / 2}`);
+  const moves = flippedCards/2;
+  const punteggio = Math.round(100 * 0.8 * livello / moves);
   tempHtml = `
     <p>Hai fatto ${punteggio} punti!</p>
-    <p class="text-2xl py-2">(${numeroClick/2} mosse)</p>
+    <p class="text-2xl py-2">(${moves} mosse)</p>
     <p>${punteggio > 90 ? 'Ottimo risultato!' : 'Puoi fare di meglio'}</p>
     `;
   let winPopup = document.querySelector('.winPopup');
   winPopup.innerHTML = tempHtml;
   winPopup.classList.remove('hidden');
 };
-
 
 // funzione che ricopro le due carte (poichè diverse)
 let unflipCard = () => {
@@ -139,7 +143,6 @@ let unflipCard = () => {
   carta1.children[0].classList.remove('hidden');
   carta2.children[0].classList.remove('hidden');
 }
-
 
 // funzione che renderizza fronte e retro della carta
 let card = '';
@@ -157,10 +160,8 @@ const creaCards = (n) => {
   ord++;
 }
 
-
 // aggiungo il listener alla board
 board.addEventListener('click', flipCard);
-
 
 // aggancio il form
 setupForm.addEventListener('submit', e => {
@@ -202,5 +203,4 @@ setupForm.addEventListener('submit', e => {
   });
 
   flipCard(e);
-
 });

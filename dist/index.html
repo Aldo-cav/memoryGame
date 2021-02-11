@@ -12,7 +12,7 @@
     <h1 class="bg-yellow-200 rounded-br-lg px-2">memoryGame</h1>
     <div class="info rounded-b-lg cursor-pointer bg-yellow-200 px-2 text-center">info</div>
     <div class="restart rounded-b-lg cursor-pointer bg-yellow-200 px-2 text-center">restart</div>
-    <div class="numClick bg-yellow-200 rounded-bl-lg px-2 text-right">moves: 0</div>
+    <div class="scoreLabel bg-yellow-200 rounded-bl-lg px-2 text-right">moves: 0</div>
   </nav>
 
   <!-- board in cui verranno inserite le carte -->
@@ -49,13 +49,14 @@
   </div>
 
   <!-- popup with credits and github link -->
-  <div class="infoPopup hidden z-10 absolute top-0 w-full h-screen bg-green-900 text-white text-center pt-40 bg-opacity-90">
+  <div class="infoPopup hidden z-10 absolute top-0 w-full h-screen bg-green-900 text-white text-center pt-40 bg-opacity-90 justify-around">
     <div class="my-8 text-2xl">
       More info and source code available on my github repo, <a class="text-yellow-300 hover:text-green-300" href="https://github.com/Aldo-cav/memoryGame" target="_blank">here</a>.
     </div>
-    <div class="my-8 text-base">
+    <div class="my-8 text-xl">
     Fruits and Vegetables images made by Freepik from <a class="text-yellow-300 hover:text-green-300" href="https://www.flaticon.com/" title="Flaticon" target="_blank">flaticon.com</a>
     </div>
+    <button class="okInfo my-12 cursor-pointer bg-green-900 text-yellow-200 w-32 p-4 rounded text-2xl">ok</button>
   </div>
 
   <script src="main.js"></script>
