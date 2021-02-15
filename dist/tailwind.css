@@ -324,6 +324,10 @@ body {
  * https://github.com/tailwindcss/tailwindcss/issues/362
  */
 
+img {
+  border-style: solid;
+}
+
 input::-moz-placeholder {
   color: #9ca3af;
 }
@@ -391,12 +395,22 @@ code {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
+img {
+  display: block;
+  vertical-align: middle;
+}
+
 /**
  * Constrain images and videos to the parent width and preserve
  * their instrinsic aspect ratio.
  *
  * https://github.com/mozdevs/cssremedy/issues/14
  */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 .bg-white {
   --tw-bg-opacity: 1 !important;
@@ -466,6 +480,10 @@ code {
 
 .cursor-pointer {
   cursor: pointer !important;
+}
+
+.inline-block {
+  display: inline-block !important;
 }
 
 .flex {
@@ -542,10 +560,6 @@ code {
   overflow: hidden !important;
 }
 
-.p-1 {
-  padding: 0.25rem !important;
-}
-
 .p-2 {
   padding: 0.5rem !important;
 }
@@ -568,12 +582,9 @@ code {
   padding-right: 0.5rem !important;
 }
 
-.pt-1 {
-  padding-top: 0.25rem !important;
-}
-
-.pt-4 {
-  padding-top: 1rem !important;
+.py-8 {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 
 .pb-8 {
@@ -582,10 +593,6 @@ code {
 
 .pt-12 {
   padding-top: 3rem !important;
-}
-
-.pb-12 {
-  padding-bottom: 3rem !important;
 }
 
 .pt-40 {
@@ -649,6 +656,14 @@ code {
 .hover\:text-green-300:hover {
   --tw-text-opacity: 1 !important;
   color: rgba(110, 231, 183, var(--tw-text-opacity)) !important;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.w-16 {
+  width: 4rem !important;
 }
 
 .w-32 {

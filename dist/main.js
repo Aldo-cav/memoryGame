@@ -1,17 +1,17 @@
-// nodo dentro cui verranno create le carte
+// main div where cards will be rendered
 const board = document.querySelector('.board');
 
-// imposto il restart della partita
+// restart button reloads the page
 const restart = document.querySelector('.restart');
 restart.addEventListener('click', function () {
   location = location;
 });
 
-// aggangio il pulsante info e il relativo popup
+// info button selector
 const info = document.querySelector('.info');
 const infoPopup = document.querySelector('.infoPopup');
 
-// al clik su info mostro il relativo popup per 10 secondi
+// info popup become visible for 10 seconds...
 info.addEventListener('click', function () {
   infoPopup.classList.remove('hidden');
   setTimeout( function () {
@@ -19,27 +19,28 @@ info.addEventListener('click', function () {
   }, 10000);
 });
 
-// chiudo il popup info col button OK
+// ...or closed if OK is clicked
 const okInfo = document.querySelector('.okInfo');
 okInfo.addEventListener('click', function() {
   infoPopup.classList.add('hidden');
 });
 
-// aggancio il popup iniziale per la scelta del livello
+// initial form popup selector
 const setPopup = document.querySelector('.setPopup');
 let setupForm = document.querySelector('.setupForm');
 
-// agancio il segnapunti
+// score label selector
 let scoreLabel = document.querySelector('.scoreLabel');
 
-// inizializzo le variabili
-let flippedCards = 0;
-let girateNum = [];
-let girateOrd = [];
-let coppieTrovate = 0;
-let livello;
+// variables setup
+let flippedCards = 0;     // total number of flips
+let flippedValue = [];    // stores the value of the 2 cards to check if matching
+let flippedPos = [];      // stores the position in the board of the 2 flipped cards
+let pairsFound = 0;       // increments on every pair found
+let level;
+let cardSet = 'vegs';
 
-// funzione che riordina casualmente gli elementi di un array
+// function to randomly re-order array elements
 const shuffle = arr => {
   const result = [];
   for (let i = arr.length-1; i >= 0; i--) {
@@ -60,145 +61,145 @@ const shuffle = arr => {
   return result;
 }
 
-// funzione che al click scopre la carta
+// function to show the front of the flipped card
 let flipCard = (e) => {
-  // verifico che sia stato cliccato una card sul retro
-  if (e.target.classList.contains('retro') && girateNum.length < 2) {
+  // is a card clicked on back face?  
+  if (e.target.classList.contains('retro') && flippedValue.length < 2) {
 
-    // incremento e aggiorno il numero delle carte girate
     flippedCards++;
     scoreLabel.innerHTML = `moves: ${Math.floor(flippedCards/2)}`;
 
-    // nascondo il retro della carta cliccata e mostro il fronte
+    // hiding back face and showing the front
     let retro = e.target;
     retro.classList.add('hidden');
     let fronte = retro.parentElement.children[1];
     fronte.classList.remove('hidden');
 
-    // inserisco valore e posizione della carta nei rispettivi array
-    girateNum.push(retro.parentElement.dataset.num);
-    girateOrd.push(retro.parentElement.dataset.ord);
+    // storing value and position in arrays
+    flippedValue.push(retro.parentElement.dataset.num);
+    flippedPos.push(retro.parentElement.dataset.ord);
 
-    // quando le carte scoperte sono 2 le confronto
-    if (girateNum.length === 2) {
-      confronta();
+    // when we got 2 flipped cards they are compared
+    if (flippedValue.length === 2) {
+      compare();
     }
   }
 };
 
-// funzione che confronta le due carte girate
-let confronta = () => {
-  // contengono la stessa figura ?
-  if (girateNum[0] === girateNum[1]) {
-    coppieTrovate++;
-    // svuoto gli array con le ultime due carte scoperte
-    girateNum.length = 0;
-    girateOrd.length = 0;
+// function to compare 2 cards
+let compare = () => {
+  // are they matching?
+  if (flippedValue[0] === flippedValue[1]) {
+    pairsFound++;
 
-    // sono state trovate tutte le coppie ?
-    if (coppieTrovate === (livello/2)) {
-      // mostro il messaggio di fine partita
+    flippedValue.length = 0;
+    flippedPos.length = 0;
+
+    // is game complete?
+    if (pairsFound ===    (level/2)) {
+      // showing winner popup after 1 second...
       setTimeout( function () {
         winnerMsg();
       }, 1000);
-      // e dopo 8 secondi la pagina viene ricarticata per resettare il gioco
+      // ...and after 8 seconds the game restart
       setTimeout( function () {
         location = location;
         }, 8000);
     }
   } else {
-    // non contengono la stessa figura, dopo un secondo le due carte vengono ricoperte
+    // cards doesn't match, they are unflipped after 1 second
     setTimeout( function() {
       unflipCard();
-      girateNum.length = 0;
-      girateOrd.length = 0;
+      flippedValue.length = 0;
+      flippedPos.length = 0;
      }, 1000);
   };
 };
 
-// funzione che mostra il popup col punteggio a fine partita
+// function to show the final score
 let winnerMsg = () => {
   const moves = flippedCards/2;
-  const punteggio = Math.round(100 * 0.8 * livello / moves);
+  const score = Math.round(100 * 0.8 * level / moves);
   tempHtml = `
-    <p>Hai fatto ${punteggio} punti!</p>
-    <p class="text-2xl py-2">(${moves} mosse)</p>
-    <p>${punteggio > 90 ? 'Ottimo risultato!' : 'Puoi fare di meglio'}</p>
+    <p>Your score is ${score}!</p>
+    <p class="text-2xl py-2">(${moves} moves)</p>
+    <p>${score > 90 ? 'Great job!' : 'You can do better.'}</p>
     `;
   let winPopup = document.querySelector('.winPopup');
   winPopup.innerHTML = tempHtml;
   winPopup.classList.remove('hidden');
 };
 
-// funzione che ricopro le due carte (poichè diverse)
+// function to hide two cards that doesn't match
 let unflipCard = () => {
-  // seleziono le due carte
-  let carta1 = board.querySelector(`[data-ord="${girateOrd[0]}"]`);
-  let carta2 = board.querySelector(`[data-ord="${girateOrd[1]}"]`);
+  // cards selector
+  let card1 = board.querySelector(`[data-ord="${flippedPos[0]}"]`);
+  let card2 = board.querySelector(`[data-ord="${flippedPos[1]}"]`);
   
-  // nascondo il fronte delle due carte cliccate
-  carta1.children[1].classList.add('hidden');
-  carta2.children[1].classList.add('hidden');
-  // e mostro il retro
-  carta1.children[0].classList.remove('hidden');
-  carta2.children[0].classList.remove('hidden');
+  // hiding front face
+  card1.children[1].classList.add('hidden');
+  card2.children[1].classList.add('hidden');
+  // showing back face
+  card1.children[0].classList.remove('hidden');
+  card2.children[0].classList.remove('hidden');
 }
 
-// funzione che renderizza fronte e retro della carta
+// function that renders cards content, front and back faces
 let card = '';
 let ord = 1;
-const creaCards = (n) => {
+const creaCards = (n, cardSet) => {
   card = `
     <li data-ord='${ord}' data-num='${n}' class="rounded-lg overflow-hidden">
       <div class="retro bg-green-300 p-2 h-full">
       </div>
       <div class="fronte shadow-lg bg-white p-2 h-full">
-        <div style="background: url('img/fruits/${n}.png')" class="h-full mx-auto bg-center bg-contain bg-no-repeat" />
+        <div style="background: url('img/${cardSet}/${n}.png')" class="h-full mx-auto bg-center bg-contain bg-no-repeat" />
       </div>
     </li>
     `;
   ord++;
 }
 
-// aggiungo il listener alla board
+// adding event listener
 board.addEventListener('click', flipCard);
 
-// aggancio il form
+// getting value of rows, cloumns and cards set from the setup form
 setupForm.addEventListener('submit', e => {
   e.preventDefault();
-  // leggo i dati dal form e imposto righe e colonne
-  let righe = setupForm.righe.value;
-  let colonne = setupForm.colonne.value;
 
-  // al submit chiudo il popup
+  let rows = setupForm.rows.value;
+  let columns = setupForm.columns.value;
+  let cardsSet = setupForm.cardsset.value;
+
+  // closing popup
   setPopup.classList.add('hidden');
 
-  livello = righe * colonne;
+  level = rows * columns;
 
-  // aggiungo la classe tailwind per incolonnare le carte (il numero di righe è fisso)
-  board.classList.add(`grid-cols-${colonne}`);
-  board.classList.add(`grid-rows-${righe}`);
+  // adding tailwind class to generate the cards grid
+  board.classList.add(`grid-cols-${columns}`);
+  board.classList.add(`grid-rows-${rows}`);
 
-  // dato che la creazione dinamica di classi non è supportata da purgeCSS aggiungo di seguito le eventuali classi statiche utili
+  // dynamically created class is not supported in PurgeCSS, so I'll add here all possible classes statically
   const forPurgeCss = `grid-cols-4 grid-cols-6 grid-cols-8 grid-rows-4 grid-rows-6`;
 
-  // riempio l'array con le carte uguali a due due 
+  // pushing necessary pairs of cards in the deck 
   let cards = [];
-  for (let index = 1; index <= livello/2; index++) {
+  for (let index = 1; index <= level/2; index++) {
     cards.push(index);
     cards.push(index);
   }
 
-  // mischio l'ordine nell'array
+  // shuffling elements order
   let shuffled = shuffle(cards);
 
-  // appendo le carte alla board (con effetto ritardo)
+  // cards rendering (with delay effect)
   let index = 1;
   shuffled.forEach( el => {
     setTimeout( function () {
-      creaCards(el)
+      creaCards(el, cardsSet)
       board.innerHTML += card;
-    }, (index)*100);
+    }, (index)*50);
     index++;
   });
 

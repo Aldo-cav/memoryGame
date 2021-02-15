@@ -15,30 +15,45 @@
     <div class="scoreLabel bg-yellow-200 rounded-bl-lg px-2 text-right">moves: 0</div>
   </nav>
 
-  <!-- board in cui verranno inserite le carte -->
+  <!-- board on wich cards will be appended -->
   <ul class="board h-screen px-2 pt-12 pb-8 md:px-4 lg:px-40 grid gap-2 md:gap-4">
   </ul>
 
-  <!-- popup iniziale per la scelta del numero di righe e colonne -->
-  <div class="setPopup z-10 absolute top-0 w-full h-screen bg-green-900 text-green-400 text-2xl text-center pt-12 bg-opacity-60">
-    <ul class="pt-4 text-yellow-200">scegli il numero di carte</ul>
-    <li class="p-1">16 (4x4) poppanti</li>
-    <li class="p-1">24 (4x6) novizi</li>
-    <li class="p-1">32 (4x8) ce la posso fare!</li>
-    <li class="p-1">36 (6x6) mi concentro</li>
-    <li class="pt-1 pb-12">48 (6x8) memory ninja!</li>
+  <!-- popup at start to setup rows and columns -->
+  <div class="setPopup z-10 absolute top-0 w-full h-screen bg-green-900 text-green-400 text-xl text-center pt-12 bg-opacity-60">
+    <p class="py-8 text-yellow-200">select your memory skill</p>
     <form class="setupForm m-auto">
-      <select class="cursor-pointer bg-green-900 text-green-400 w-32 p-3 rounded" name="righe">
-        <option value=4>4 righe</option>
-        <option value=6>6 righe</option>
+      <select class="cursor-pointer bg-green-900 text-green-400 w-32 p-3 rounded" name="rows">
+        <option value=4>4 rows</option>
+        <option value=6>6 rows</option>
       </select>
-      <select class="cursor-pointer bg-green-900 text-green-400 w-40 p-3 rounded" name="colonne">
-        <option value=4>4 colonne</option>
-        <option value=6>6 colonne</option>
-        <option value=8>8 colonne</option>
+      <select class="cursor-pointer bg-green-900 text-green-400 w-40 p-3 rounded" name="columns">
+        <option value=4>4 columns</option>
+        <option value=6>6 columns</option>
+        <option value=8>8 columns</option>
       </select>
+
+      <p class="py-8 text-yellow-200">select your preferred cards set</p>
+      <div class="cardsradio">
+        <label class="p-4 inline-block">
+          <img class="w-16 cursor-pointer m-auto" src="./img/vegs/4.png" alt="vegetables">
+          <input checked="checked" id="vegs" type="radio" name="cardsset" value="vegs" />
+          <p>Fruits+Vegs</p>
+        </label>
+        <label class="p-4 inline-block">
+          <img class="w-16 cursor-pointer m-auto" src="./img/monuments/7.png" alt="monuments">
+          <input id="monuments" type="radio" name="cardsset" value="monuments" />
+          <p>Monuments</p>
+        </label>
+        <label class="p-4 inline-block">
+          <img class="w-16 cursor-pointer m-auto" src="./img/animals/1.png" alt="animals">
+          <input id="animals" type="radio" name="cardsset" value="animals" />
+          <p>Animals</p>
+        </label>
+      </div>
+
       <div class="p-2">
-        <input class="cursor-pointer bg-green-900 text-yellow-200 w-32 p-4 rounded" type="submit" value="OK">
+        <input class="cursor-pointer bg-green-900 text-yellow-200 w-32 p-2 rounded" type="submit" value="OK">
       </div>
     </form>
   </div>
@@ -48,13 +63,13 @@
     Good Job!
   </div>
 
-  <!-- popup with credits and github link -->
+  <!-- popup with github link and credits -->
   <div class="infoPopup hidden z-10 absolute top-0 w-full h-screen bg-green-900 text-white text-center pt-40 bg-opacity-90 justify-around">
     <div class="my-8 text-2xl">
-      More info and source code available on my github repo, <a class="text-yellow-300 hover:text-green-300" href="https://github.com/Aldo-cav/memoryGame" target="_blank">here</a>.
+      More info and source code available on <a class="text-yellow-300 hover:text-green-300" href="https://github.com/Aldo-cav/memoryGame" target="_blank">my github repo</a>.
     </div>
     <div class="my-8 text-xl">
-    Fruits and Vegetables images made by Freepik from <a class="text-yellow-300 hover:text-green-300" href="https://www.flaticon.com/" title="Flaticon" target="_blank">flaticon.com</a>
+      All images from <a class="text-yellow-300 hover:text-green-300" href="https://www.flaticon.com/" title="Flaticon" target="_blank">flaticon.com</a>
     </div>
     <button class="okInfo my-12 cursor-pointer bg-green-900 text-yellow-200 w-32 p-4 rounded text-2xl">ok</button>
   </div>
